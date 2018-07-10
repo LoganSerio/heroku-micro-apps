@@ -13,7 +13,7 @@ def index():
     return """
     <h1>Welcome to the home of my micro apps!</h1>
     <p>On this webpage I will be creating and linking to small python applications that I've made.</p>
-    <a href="heroku-micro-apps.herokuapp.com/test">Click here to go to test page</a>
+    <a href="/test">Click here to go to test page</a>
     """
 if __name__ == "__main__":
     app.run(debug=True,use_reloader=True)
