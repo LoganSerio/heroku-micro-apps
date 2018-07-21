@@ -1,5 +1,7 @@
 from flask import Flask, render_template,request
+from jinja2 import Template 
 import twint
+import io
 import time
 import os
 import pandas as pd
@@ -14,22 +16,28 @@ def twittersearchpage():
 
 @app.route('/searchresults',methods=['POST','GET'])
 def searchResults():
-    # if request.method == 'POST':
-    filename = "static/twitter.csv"
-    # # #opening the file with w+ mode truncates the file
-    f = open(filename, "w+")
-    f.truncate()
-    f.close()
     c = twint.Config()
     c.Username = request.form['username']
     c.Store_csv = True
-    c.Custom = ["id", "user_id", "username", "tweet"] 
+    c.Custom = ["username", "tweet"] 
     c.Limit = 20
     c.Output = "static/twitter.csv"
     twint.run.Search(c)
     df = pd.read_csv('static/twitter.csv')
     df.to_html("templates/blah.html")
-    return render_template('blah.html')
+    
+    # with open("static/twitter.csv") as f:
+    #     s = f.read() 
+    # lst = []
+    # buf = io.StringIO(s)
+    # for line in buf.read():
+    #     lst.append(line)
+    # print(lst)
+    # filename = 'twitter.csv'
+    # f = open(filename, "w+")
+    # f.truncate()
+    # f.close()
+    return render_template("blah.html")
 
 
 @app.route('/')
